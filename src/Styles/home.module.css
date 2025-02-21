@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=McLaren&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+.bg{
+    height: 100vh;
+    background-size: contain;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.bg2{
+    display: flex;
+    justify-content: left ;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.07);
+}
+.menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 245px;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+.menu h2{
+    padding: 30px 0;
+    font-size: 22px;
+    color: #301934;
+    font-family: "McLaren", "sans-serif";
+}
+.menu1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.divider {
+    height: 1px;
+    background-color: #E5E4E2;
+    width: 100%;
+    margin: 20px;
+}
+.chat{
+    display: flex;  
+    justify-content: center;
+    align-items: center; 
+    width: 245px;
+    height: 63px;
+    border: #e5e4e2 3px solid;
+    background:none;
+    cursor: pointer;
+}
+.chat img{
+    width: 41px;
+    height: 41px;
+    padding-right: 20px;
+}
+.chat p{
+    color: #22577A;
+    font-size: 22px;
+    font-family: "McLaren", "sans-serif";
+}

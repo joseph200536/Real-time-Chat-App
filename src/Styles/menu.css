@@ -1,0 +1,26 @@
+.chat{
+    display: flex;  
+    justify-content: center;
+    align-items: center; 
+    width: 245px;
+    height: 63px;
+    border: #e5e4e2 3px solid;
+    background:none;
+    cursor: pointer;
+}
+.chat.active{
+    background: #22577A;
+}
+.chat img{
+    width: 41px;
+    height: 41px;
+    padding-right: 20px;
+}
+.chat p{
+    color: #22577A;
+    font-size: 22px;
+    font-family: "McLaren", "sans-serif";
+}
+.chat-p.active{
+    color: white;
+}
