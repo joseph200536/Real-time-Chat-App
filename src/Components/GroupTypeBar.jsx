@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react'
 import styles from '../Styles/chat.module.css'
 import socket from '../socket';
-export default function TypeBar() {
+export default function GroupTypeBar() {
     const [input,setInput] = useState('');
-    const [frd,setFrd] = useState('');
+    const [frds,setFrds] = useState([]);
+    const [groupName,setGroupName] = useState('');
     useEffect(() => {
-        // Set up the event listener for 'frdNamefromserver'
-        const handleFrdName = (frdName) => {
-            setFrd(frdName);
+        const handleFrdsName = (frdsName) => {
+            setFrds(frdsName);
         };
-
-        socket.on('frdNamefromserver', handleFrdName);
-        
-        
-        // Clean up the event listener when the component unmounts
+        socket.on('grpnameformsg',(group)=>{
+            setGroupName(group.groupName);
+        })
+        socket.on('groupmembers', handleFrdsName);
         return () => {
-            socket.off('frdNamefromserver', handleFrdName);
+            socket.off('groupsmembers', handleFrdsName);
         };
     }, []); 
     const reload = ()=>{
@@ -25,17 +24,17 @@ export default function TypeBar() {
         if(event.key == 'Enter'){
             event.preventDefault();
             setInput('');
-            console.log(frd);
+            console.log(frds);
             console.log('Socket connected:', socket.connected);
-            socket.emit('privatemsg',input,frd);
+            socket.emit('groupmsg',input,frds,groupName);
         }
     }
     const handlekeydown2 = (event)=>{
             event.preventDefault();
             setInput('');
-            console.log(frd);
+            console.log(frds);
             console.log('Socket connected:', socket.connected);
-            socket.emit('privatemsg',input,frd);
+            socket.emit('groupmsg',input,frds,groupName);
     }
     return(
         <div>
@@ -43,7 +42,7 @@ export default function TypeBar() {
                 <button><img src="../src/asset/images/link 1.png" alt="" /></button>
                 <input type="text" value={input}  placeholder='Type Here' onClick={reload}
                 onChange={(e)=>setInput(e.target.value)} onKeyDown={handlekeydown}/>
-                <button onClick={handlekeydown2}><img  id={styles.barimg} src="../src/asset/images/send 2.png" alt="" /></button>
+                <button onClick={handlekeydown2} ><img id={styles.barimg} src="../src/asset/images/send 2.png" alt="" /></button>
             </div>
             <script src="/socket.io/socket.io.js"></script>
         </div>

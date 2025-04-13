@@ -1,4 +1,4 @@
-import Chat from "../Components/Chat";
+import GroupChatComp from "../Components/GroupChatComp.jsx";
 import GroupComp from "../Components/GroupComp";
 import Menu from "../Components/Menu";
 import styles from '../Styles/chat.module.css'
@@ -10,7 +10,7 @@ export default function GroupChat() {
             <div className={styles.bg2}>
                 <Menu />
                 <GroupComp />
-                <Chat />
+                <GroupChatComp />
             </div>
         </div>
         </div>

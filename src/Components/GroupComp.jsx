@@ -1,22 +1,41 @@
-import group from "../asset/groups";
 import styles from '../Styles/friends.module.css'
 import {useNavigate} from 'react-router-dom'
-export default function GroupComp(name,img) {
+import {useState,useEffect} from 'react'
+import axios from 'axios'
+import socket from '../socket'
+export default function GroupComp() {
     const navigate = useNavigate();
-    function handlefunction(name,img){
-        navigate('/groupchat',{state:{name,img}});
+    function handlefunction(grpname,img){
+        socket.emit('groupname',grpname);
+        navigate('/groupchat',{state:{grpname,img}});
+    }
+    const userName = sessionStorage.getItem("userName"); 
+    const [groups,setGroups] = useState([]);
+    useEffect(()=>{
+        axios.get(`http://localhost:3000/api/groups/${userName}`)
+        .then(response=>{
+            setGroups(response.data);
+        })
+        .catch(error=>{
+            console.error("Error fetching groups:",error);
+        });
+    },[userName]);
+    function addusers(){
+        navigate('/addgroup');
     }
     return(
         <div className={styles.frd}>
-            <h2>Groups!!</h2>
+            <h2>Groups!!  <button onClick={addusers}>+</button></h2>
             <div className={styles.users}>
-
-            {group.map((grp) => (
-                <button onClick={()=>{handlefunction(grp.name,grp.img)}}  key={grp.id}>
-                    <img src={grp.img} alt="" />
-                    <p>{grp.name}</p>
+            {groups.length > 0 ? (
+            groups.map((grp,index) => (
+                <button  onClick={()=>{handlefunction(grp.groupName,`http://localhost:3000/api/userimage/${grp.groupName}`)}}  key={index}>
+                    <img src={`http://localhost:3000/api/userimage/${grp.groupName}`} alt="" />
+                    <p>{grp.groupName}</p>
                 </button>
-            ))}
+            ))):(
+                <p>No groups found.</p>
+            )}
             </div>
         </div>
     )

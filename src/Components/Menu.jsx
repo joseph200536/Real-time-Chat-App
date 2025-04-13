@@ -1,10 +1,20 @@
 import styles from '../Styles/home.module.css'
 import { useNavigate } from 'react-router-dom'
 import { MenuComp } from '../Components/MenuComp.jsx'
+import socket from '../socket';
 export default function Menu(){
     const navigate = useNavigate();
+
+    const userName= sessionStorage.getItem("userName") || "";
+    
     const handlefunction = () => {
-        navigate('/profile');
+        console.log(userName);
+        if (!userName) {
+        alert("User not found! Please log in.");
+        return;
+    }
+    socket.emit("details", userName);
+    navigate('/profile');
     }
     function gohome(){
         navigate('/home')

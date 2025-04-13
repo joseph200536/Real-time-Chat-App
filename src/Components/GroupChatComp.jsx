@@ -1,17 +1,26 @@
 import {useLocation } from 'react-router-dom'
 import styles from '../Styles/chat.module.css'
 import Head from './Head'
-import TypeBar from './TypeBar'
+import GroupTypeBar from './GroupTypeBar';
 import socket from '../socket';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-export default function Chat() {
+export default function GroupChatComp() {
     const location = useLocation();
-    const {name,img} = location.state || {};
+    const {grpname,img} = location.state || {};
     const [messages, setMessages] = useState([]);
     const userName = sessionStorage.getItem('userName');
-    const frd = name;
+    const [frds,setFrds] = useState([]);
+    useEffect(() => {
+        const handleFrdsName = (frdsName) => {
+            setFrds(frdsName);
+        };
 
+        socket.on('groupmembers', handleFrdsName);
+        return () => {
+            socket.off('groupsmembers', handleFrdsName);
+        };
+    }, []); 
     useEffect(() => {
         const handleReceivedMsg = (data) => {
             console.log('Received message:', data);
@@ -19,10 +28,10 @@ export default function Chat() {
         };
         const fetchMessage = async()=>{
             try{
-                const response = await axios.get('http://localhost:3000/api/messages',{
+                const response = await axios.get('http://localhost:3000/api/groupmessages',{
                     params:{
                         user1:userName,
-                        user2:frd
+                        groupName:grpname
                     },
                 });
                 if (Array.isArray(response.data)) {
@@ -39,25 +48,25 @@ export default function Chat() {
         }
         fetchMessage();
         socket.emit('user',sessionStorage.getItem('userName'));
-        socket.on('receivedmsg', handleReceivedMsg);
+        socket.on('grpmsgoutput', handleReceivedMsg);
         return () => {
-            socket.off('receivedmsg', handleReceivedMsg);
+            socket.off('grpmsgoutput', handleReceivedMsg);
         };
-    }, [userName,frd]);
+    }, [userName,frds]);
     
    
     
     return(
         <div className={styles.chat}>
-            <Head name={name} img={img} />
-            <div className={styles.messages }>
+            <Head name={grpname} img={img} />
+            <div className={styles.messages}>
                 {Array.isArray(messages) && messages.map((msg, index) => (
                     <div key={index}>
                         <strong>{msg.from}:</strong> {msg.message}
                     </div>
                 ))}
             </div>
-            <TypeBar/> 
+            <GroupTypeBar/>
         </div>
     )
 }

@@ -36,9 +36,15 @@
     left: 100px;
     padding-bottom: 15px;
 }
+.imgupload{
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+}
 .img img{
     width: 240px;
     height: 240px;
+    border-radius: 50%;
     padding-right: 20px;
 }
 .img p{

@@ -10,6 +10,7 @@ import { SignUp } from "./pages/SignUp";
 import Searchprofile from "./pages/Searchprofile";
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import Profile from "./pages/Profile";
+import Addgroup from "./pages/AddGroup";
 const App = () => {
   
   return (
@@ -26,6 +27,7 @@ const App = () => {
       <Route path='/addfriends' element={<AddFriends/>}/>
       <Route path='/searchprofile' element={<Searchprofile/>} />
       <Route path='/profile' element={<Profile/>}/>
+      <Route path='/addgroup' element={<Addgroup/>}/>
       </Routes>
     </BrowserRouter>
   );

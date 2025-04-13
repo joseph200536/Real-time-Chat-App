@@ -2,21 +2,31 @@ import '../Styles/Signin.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { useState } from 'react';
+import socket from "../socket";
 export function LoginComp() {
     const [emailorpass, setEmail] = useState();
     const [password, setPassword] = useState();
-
     const navigate = useNavigate();
 
-    const handleSubmit= (e) =>{
+    
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/login',{emailorpass,password})
-        .then(result=>{
-            console.log(result);{
-            navigate("/home");} 
-        })
-        .catch(err=>console.log(err));
-    }
+        axios.post('http://localhost:3000/login', { emailorpass, password })
+            .then(result => {
+                if (result.data.token) {
+                    const userName  = result.data.user.userName;
+                    sessionStorage.setItem("userName",userName);
+                    socket.emit("user", userName );
+
+                console.log("Login Successful! User:", userName);
+                navigate("/home");
+                } else {
+                    console.error("Login failed:", result.data);
+                }
+            })
+            .catch(err => console.log("Error:", err));
+    };
     return (
         <div className="sign">
             <form onSubmit={handleSubmit} action="">

@@ -8,7 +8,10 @@ export function MenuComp() {
     function handlefunction(id){
         setActiveButton(id);
         console.log(id);
-        if(id===1) navigate('/friends');
+        if(id===1){
+         navigate('/friends');
+        }
+            
         if(id===2) navigate('/groups');
         if(id===3) navigate('/settings');
         if(id===4) navigate('/addfriends');
