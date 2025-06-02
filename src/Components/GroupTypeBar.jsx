@@ -39,7 +39,6 @@ export default function GroupTypeBar() {
     return(
         <div>
             <div className={styles.bar} >
-                <button><img src="../src/asset/images/link 1.png" alt="" /></button>
                 <input type="text" value={input}  placeholder='Type Here' onClick={reload}
                 onChange={(e)=>setInput(e.target.value)} onKeyDown={handlekeydown}/>
                 <button onClick={handlekeydown2} ><img id={styles.barimg} src="../src/asset/images/send 2.png" alt="" /></button>

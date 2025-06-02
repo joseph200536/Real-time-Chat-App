@@ -25,7 +25,9 @@ export function LoginComp() {
                     console.error("Login failed:", result.data);
                 }
             })
-            .catch(err => console.log("Error:", err));
+            .catch(err => {
+                alert("check your credentials");
+                console.log("Error:", err)});
     };
     return (
         <div className="sign">

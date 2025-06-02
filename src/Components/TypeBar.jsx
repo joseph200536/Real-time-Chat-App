@@ -1,11 +1,10 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../Styles/chat.module.css';
 import socket from '../socket';
 
 export default function TypeBar() {
     const [input, setInput] = useState('');
     const [frd, setFrd] = useState('');
-    const fileInputRef = useRef(null);
 
     useEffect(() => {
         const handleFrdName = (frdName) => {
@@ -44,41 +43,10 @@ export default function TypeBar() {
         }
     }
 
-    const handleFileClick = () => {
-        fileInputRef.current.click();
-    }
-
-    const handleFileChange = (event) => {
-        const selectedFile = event.target.files[0];
-        if (selectedFile) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const fileContent = e.target.result;
-                socket.emit('fileUpload', {
-                    fileName: selectedFile.name,
-                    fileType: selectedFile.type,
-                    fileSize: selectedFile.size,
-                    content: fileContent, 
-                    recipient: frd
-                });
-            };
-            reader.readAsDataURL(selectedFile);
-        }
-    }
-
+   
     return (
         <div>
             <div className={styles.bar}>
-                <input 
-                    type="file" 
-                    ref={fileInputRef}
-                    style={{ display: 'none' }} 
-                    onChange={handleFileChange}
-                />
-                <button onClick={handleFileClick}>
-                    <img src="../src/asset/images/link 1.png" alt="Attach file" />
-                </button>
-                
                 <input 
                     type="text" 
                     value={input}  

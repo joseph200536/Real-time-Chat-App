@@ -29,7 +29,7 @@ export default function Chat() {
                     setMessages(response.data);
                 } else {
                     console.error('API response is not an array:', response.data);
-                    setMessages([]); // Set messages to an empty array as a fallback
+                    setMessages([]); 
                 }
             }catch(error){
                 console.error('Error fetching messages:',error);
